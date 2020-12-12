@@ -92,8 +92,13 @@ FocusScope{
                 highlightMoveDuration: 10   //设定高亮代理的移动速度，实质上是指切换动作的速度；暂时找到Value与每秒切换像素点数量的关系，value = 10效果良好。
                 highlightFollowsCurrentItem: true
 
-                model:data_src.model
-                delegate: Switch_listView_item{}
+                model:data_src.set_model
+                delegate: Switch_listView_item{
+                    onItem_clicked: {
+                        console.debug(" Switch_listView_item ... "+my_list.currentIndex);
+                        data_src.visible_changed( my_list.currentIndex );
+                    }
+                }
                 onContentYChanged: {
 //                    list_scroll_bar.barY = my_list.contentY/my_list.contentHeight*list_scroll_bar.height
                 }

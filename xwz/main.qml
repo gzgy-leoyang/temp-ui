@@ -5,8 +5,8 @@ import QtQuick.Controls 1.4
 import "./Pages"
 Window {
     visible: true
-    width: 720
-    height: 1130
+    width: 1280
+    height: 800
 
     Rectangle{
         id: root_rect_container

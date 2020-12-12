@@ -4,7 +4,6 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    Page_components/page_monitor_info_data.cpp \
     Page_components/page_monitor_info_set_data.cpp
 
 RESOURCES += qml.qrc
@@ -32,6 +31,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Page_components/page_monitor_info_data.h \
     Page_components/page_moniter_info_set_data.h \
     Page_components/page_monitor_info_set_data.h

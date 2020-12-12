@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import QtQml 2.0
 
 import "../Qml_widget"
-import qml.custom.Page_moniter_info_data 1.0
+import qml.custom.Page_moniter_info_set_data 1.0
 
 FocusScope{
     id:tgu_param_info_for_usr_fs
@@ -33,7 +33,7 @@ FocusScope{
     property int current_run_mode: 0
     property int size_list: 0
 
-    Page_moniter_info_data{
+    Page_moniter_info_set_data{
         id: data_src
     }
 
@@ -42,11 +42,6 @@ FocusScope{
         listview_container.focus = true;
     }
 
-    // 页面的键盘处理
-//    Keys.onPressed: {
-//        if (event.key === Qt.Key_Space){
-
-//    }
 
     Rectangle{
         id: page_root
@@ -55,10 +50,6 @@ FocusScope{
         color:"#050505"
         x:0
         y:0
-
-        onVisibleChanged: {
-            tgu_info_data_src.shining(page_root.visible);
-        }
 
         /*************************  页面名称 *****************************/
         Title_row{

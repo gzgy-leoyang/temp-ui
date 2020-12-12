@@ -8,10 +8,12 @@ FocusScope{
     focus:true
     x:page_root.x
     y:page_root.y
+
+
     Rectangle{
         id:page_root
-        width: 720
-        height: 1130
+        width: 1280
+        height: 800
         color: "#050505"
         //按键
         Row{

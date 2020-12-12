@@ -1,4 +1,4 @@
-#include "Page_components/page_monitor_info_data.h"
+
 #include "Page_components/page_monitor_info_set_data.h"
 
 #include <QGuiApplication>
@@ -10,7 +10,6 @@
 
 void page_data_regeist(void)
 {
-    qmlRegisterType<Page_moniter_info_data>( "qml.custom.Page_moniter_info_data", 1, 0, "Page_moniter_info_data" );
     qmlRegisterType<Page_moniter_info_set_data>( "qml.custom.Page_moniter_info_set_data", 1, 0, "Page_moniter_info_set_data" );
 }
 

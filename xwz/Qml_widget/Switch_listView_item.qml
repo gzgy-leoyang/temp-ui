@@ -146,7 +146,7 @@ Rectangle{
             my_list.focus = true;
             my_list.currentIndex = index;
             item_clicked();
-            console.log("index = ", index)
+//            console.log("index = ", index)
         }
     }
 }

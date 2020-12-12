@@ -7,6 +7,8 @@
 #include <QStringList>
 #include <QAbstractListModel>
 
+#define _SIZEOF_PARAM_LIST (2)
+
 /////////
 class Moniter_param : public QObject
 {
@@ -39,7 +41,7 @@ class MoniterInfoSet_param : public QObject
 {
     Q_OBJECT
 public:
-    MoniterInfoSet_param(QString _name,QString _val ,QString _unit , QString _visible, QObject* parent=0);
+    MoniterInfoSet_param(QString _name,QString _val ,QString _unit , bool _visible, QObject* parent=0);
     QString m_name ;
     QString m_value;
     QString m_unit;
@@ -58,7 +60,7 @@ public:
     QHash<int, QByteArray> roleNames()  const;
 
     bool pushData( MoniterInfoSet_param* _entry );
-    void refresh( const int& _index ,const QString& _str_val, const QString& _visible);
+    void refresh( const int& _index ,const QString& _str_val, const bool& _visible);
 private:
     QList< MoniterInfoSet_param* > m_params_list;//被封装的数组
 };
@@ -68,29 +70,6 @@ private:
 class Page_moniter_info_set_data : public QObject
 {
     Q_OBJECT
-
-
-public:
-    Page_moniter_info_set_data( QObject *parent = 0);
-
-    Q_PROPERTY( MoniterInfoSet_Model* model  READ get_model NOTIFY model_changed)
-    MoniterInfoSet_Model* get_set_model(void) const { return m_model ;}
-
-    Q_PROPERTY( MoniterParams_Model* model  READ get_model NOTIFY model_changed)
-    MoniterParams_Model* get_model(void) const { return m_model ;}
-
-signals:
-    void model_changed();
-
-public slots:
-    void slot_timer();
-
-private:
-    MoniterInfoSet_Model* m_set_model;
-    MoniterParams_Model*  m_model;
-    int m_sizeof_params_list;
-    QTimer *timer;
-
     typedef struct {
         QString name;
         int     index;
@@ -107,12 +86,41 @@ private:
         bool    visible; //是否显示
     }MoniterSet_param_t;
 
-    MoniterSet_param_t* m_pParams_list;
+public:
+    Page_moniter_info_set_data( QObject *parent = 0);
 
-    MoniterSet_param_t moniter_param_list[1] = {
+    Q_PROPERTY( MoniterInfoSet_Model* set_model  READ get_set_model NOTIFY set_model_changed)
+    Q_PROPERTY( MoniterParams_Model*  model      READ get_model     NOTIFY model_changed)
+
+    MoniterInfoSet_Model* get_set_model(void) ;
+    MoniterParams_Model* get_model(void) ;
+
+    Q_INVOKABLE void visible_changed( int _index );
+
+signals:
+    void model_changed();
+    void set_model_changed();
+
+public slots:
+    void slot_timer();
+
+private:
+    int m_model_type;
+    MoniterInfoSet_Model* m_set_model;
+    MoniterParams_Model*  m_model;
+
+    QTimer *timer;
+
+    int m_sizeof_params_list;
+    MoniterSet_param_t* m_pParams_list;
+    MoniterSet_param_t moniter_param_list[_SIZEOF_PARAM_LIST] = {
         {.name="发动机转速",.index= 0,
         .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
-        .decimal=0,.unit="r/min",.str_list={},.visible=true}
+        .decimal=0,.unit="rpm",.str_list={},.visible=true},
+
+        {.name="转速2",.index= 0,
+        .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+        .decimal=0,.unit="rpm",.str_list={},.visible=true}
     };
 };
 
