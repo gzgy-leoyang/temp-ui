@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Qml_widget/Unactivable_listView_item.qml</file>
+        <file>Qml_widget/Title_row.qml</file>
+        <file>Pages/Page_monitor_Info.qml</file>
+        <file>Page_main.qml</file>
+        <file>Pages/Page_monitor_info_set.qml</file>
+        <file>Qml_widget/Switch_listView_item.qml</file>
+    </qresource>
+</RCC>
