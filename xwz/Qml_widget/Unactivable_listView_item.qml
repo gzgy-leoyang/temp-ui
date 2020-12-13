@@ -9,8 +9,8 @@ TODO:
 
 Item {
     id:root_container
-    width: 720 - 8
-    height: 1130/16
+    width: 1280
+    height: 800/16
     property bool have_icon: false
     property color text_color: "#d1d4c9"
     property real font_size: 35

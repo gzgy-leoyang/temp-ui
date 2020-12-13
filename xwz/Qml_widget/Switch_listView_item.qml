@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle{
     id: dlg_root
-    width: 720
+    width: 1280
     height: 100
     color: "transparent"
     border.width: 4
@@ -36,7 +36,7 @@ Rectangle{
         Text {
             id:m_name
             text:title
-            width: 300
+            width: 600
             anchors.left: parent.left
             anchors.leftMargin: 20;
             anchors.verticalCenter: parent.verticalCenter
@@ -146,7 +146,7 @@ Rectangle{
             my_list.focus = true;
             my_list.currentIndex = index;
             item_clicked();
-//            console.log("index = ", index)
+            console.log("index = ", index)
         }
     }
 }

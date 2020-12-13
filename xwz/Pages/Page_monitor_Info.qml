@@ -17,21 +17,6 @@ FocusScope{
 
     property int page_id:1
     property string page_name: "tgu_param_info_for_usr"
-    property Item       item_focused    : null
-    property int list_currentindex:0
-    property bool temp_bool: false
-    property int brightness: 0
-
-    property int current_head_index: 0
-    property int reposition_y: 0
-    property int ddd:0
-
-    property string value_tmp: ""
-    property int i: 0
-    property int len_str: 0
-    property int current_view_item_num: 0
-    property int current_run_mode: 0
-    property int size_list: 0
 
     Page_moniter_info_set_data{
         id: data_src
@@ -42,18 +27,29 @@ FocusScope{
         listview_container.focus = true;
     }
 
+    // 页面的键盘处理
+//    Keys.onPressed: {
+//        if (event.key === Qt.Key_Space){
+
+//    }
 
     Rectangle{
         id: page_root
-        width: 720
-        height: 1130
+        width: 1280
+        height: 672
         color:"#050505"
         x:0
         y:0
 
+//        onVisibleChanged: {
+//            tgu_info_data_src.shining(page_root.visible);
+//        }
+
         /*************************  页面名称 *****************************/
         Title_row{
             id: title_row
+            width: 1280
+            height: 90
             anchors.bottom: listview_container.top
             anchors.bottomMargin: listview_container.border.width
             text: "监控信息"

@@ -8,12 +8,10 @@ FocusScope{
     focus:true
     x:page_root.x
     y:page_root.y
-
-
     Rectangle{
         id:page_root
-        width: 1280
-        height: 800
+        width: 720
+        height: 1130
         color: "#050505"
         //按键
         Row{
@@ -39,6 +37,17 @@ FocusScope{
                 text: "监控信息设置"
                 onClicked: {
                     var cmp = Qt.createComponent( "qrc:/Pages/Page_monitor_info_set.qml" );
+                    var page = cmp.createObject(root_rect_container,{});
+                    root_stack.push({item:page, destroyOnPop:true});
+                }
+            }
+
+            Button {
+                width: 100
+                height: 80
+                text: "保养记录"
+                onClicked: {
+                    var cmp = Qt.createComponent( "qrc:/Pages/Page_maintain_info.qml" );
                     var page = cmp.createObject(root_rect_container,{});
                     root_stack.push({item:page, destroyOnPop:true});
                 }

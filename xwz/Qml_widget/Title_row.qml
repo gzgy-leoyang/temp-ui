@@ -3,7 +3,7 @@ import QtQuick 2.7
 Rectangle{
     id: title_root
     height: 90
-    width: 720
+    width: 1280
     property real font_size: 35
     property alias text: title_text.text
     property color text_color: "white"
@@ -22,7 +22,6 @@ Rectangle{
 //        }
 //    }
 
-
     Row{
         height: parent.height-2
         width: parent.width
@@ -37,7 +36,7 @@ Rectangle{
                 width: parent.width
                 height: parent.height*0.5
                 anchors.centerIn: parent
-                source: ""
+                source: "qrc:/Qml_widget/left.png"
             }
         }
 

@@ -12,9 +12,24 @@ Window {
         id: root_rect_container
         anchors.fill: parent
         color: "#050505"
+        Rectangle{
+            id: top_info
+            width: 1280
+            height: 128
+            color: "gray"
+
+            Text{
+                id: top_text
+                text: "top"
+                font.pixelSize: 50
+                anchors.centerIn: parent
+            }
+        }
         StackView {
             id: root_stack
-            anchors.fill: parent
+            height: 672
+            width: 1280
+            anchors.top: top_info.bottom
             focus: true
             // 初始页面
             initialItem:Page_main{}

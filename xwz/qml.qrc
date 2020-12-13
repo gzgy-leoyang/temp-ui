@@ -7,5 +7,15 @@
         <file>Page_main.qml</file>
         <file>Pages/Page_monitor_info_set.qml</file>
         <file>Qml_widget/Switch_listView_item.qml</file>
+        <file>Pages/Monitor_info_set/Page_hydraulic_param_set.qml</file>
+        <file>Pages/Monitor_info_set/Page_engine_param_set.qml</file>
+        <file>Pages/Monitor_info_set/Page_electrical_param_set.qml</file>
+        <file>Pages/Monitor_info_set/Page_config_param_set.qml</file>
+        <file>Qml_widget/Switcher.qml</file>
+        <file>Qml_widget/Mix_menu_list_item.qml</file>
+        <file>Qml_widget/left.png</file>
+        <file>Qml_widget/Dlg_maintain_info_item.qml</file>
+        <file>Pages/right_arrow_XL.png</file>
+        <file>Pages/Page_maintain_info.qml</file>
     </qresource>
 </RCC>
