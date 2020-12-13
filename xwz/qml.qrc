@@ -17,5 +17,6 @@
         <file>Qml_widget/Dlg_maintain_info_item.qml</file>
         <file>Pages/right_arrow_XL.png</file>
         <file>Pages/Page_maintain_info.qml</file>
+        <file>Pages/Page_maintain_info_set.qml</file>
     </qresource>
 </RCC>

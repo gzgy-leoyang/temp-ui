@@ -1,0 +1,114 @@
+{
+    "0": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机机油滤芯",
+        "peroid": 50,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "1": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机油水分离器滤芯",
+        "peroid": 50,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "2": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机初级燃油率",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "3": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机二级燃油率",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "4": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机机油",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "5": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换发动机冷却液",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "6": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换液压油回油滤芯",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "7": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换液压油吸油滤芯",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "8": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换呼吸器滤芯",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "9": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换液压油",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "10": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换先导滤芯",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "11": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换回转减速机齿轮油",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "12": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换左行走减速机齿轮油",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    },
+    "13": {
+        "hm_type": "hm_idle",
+        "last": 0,
+        "name": "更换有行走减速机齿轮油",
+        "peroid": 150,
+        "last_date": "99-01-01",
+        "visible": true
+    }
+}

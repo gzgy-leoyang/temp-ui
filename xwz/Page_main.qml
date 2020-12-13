@@ -52,6 +52,17 @@ FocusScope{
                     root_stack.push({item:page, destroyOnPop:true});
                 }
             }
+
+            Button {
+                width: 100
+                height: 80
+                text: "保养监控开关"
+                onClicked: {
+                    var cmp = Qt.createComponent( "qrc:/Pages/Page_maintain_info_set.qml" );
+                    var page = cmp.createObject(root_rect_container,{});
+                    root_stack.push({item:page, destroyOnPop:true});
+                }
+            }
         }
     }
 

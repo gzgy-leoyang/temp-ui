@@ -10,7 +10,7 @@ TODO:
 
 Item {
     id:root_container
-    width: 720
+    width: 1280
     height: 100
 
     signal headIndexChanged();
@@ -23,7 +23,7 @@ Item {
 
     Item{
         id:text_container;
-        width: 700
+        width: 1280
         height: 100
         anchors.fill: parent;
         anchors.left: parent.left
@@ -31,10 +31,12 @@ Item {
 
         Item{
             id:name_container
-            width: 720
+            width: 600
             height: 60
+//            color: "red"
             anchors.left: parent.left
-            anchors.top: parent.top
+//            anchors.top: parent.top
+            anchors.verticalCenter: parent.verticalCenter
 
             Text {
                 id:m_name
@@ -55,8 +57,12 @@ Item {
             id:peroid_container
             width: 240
             height: 30
-            anchors.left: parent.left
-            anchors.top: name_container.bottom
+//            color: "blue"
+//            anchors.left: parent.left
+//            anchors.top: name_container.bottom
+            anchors.left: name_container.right
+            anchors.verticalCenter: parent.verticalCenter
+
             Text {
                 id:peroid_txt
                 text: "周期:"+cycle+"h"
@@ -65,8 +71,10 @@ Item {
                 width: parent.width
                 font.family: "Ubuntu"
                 font.pixelSize: 25
-                verticalAlignment: Text.AlignTop
-                horizontalAlignment: Text.AlignLeft
+//                verticalAlignment: Text.AlignTop
+//                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter//Text.AlignTop
+                horizontalAlignment: Text.AlignLeft//Text.AlignRight
                 wrapMode: Text.WrapAnywhere
             }
         }
@@ -75,8 +83,13 @@ Item {
             id:last_time_container
             width: 240
             height: 30
+//            color: "green"
+//            anchors.left: peroid_container.right
             anchors.left: peroid_container.right
-            anchors.top: name_container.bottom
+//            anchors.leftMargin: 0
+            anchors.verticalCenter: parent.verticalCenter
+
+//            anchors.top: name_container.bottom
             Text {
                 id:last_time_txt
                 text: "最近:"+last_time+"h"
@@ -85,8 +98,10 @@ Item {
                 width: parent.width
                 font.family: "Ubuntu"
                 font.pixelSize: 25
-                verticalAlignment: Text.AlignTop
-                horizontalAlignment: Text.AlignRight
+//                verticalAlignment: Text.AlignTop
+//                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter//Text.AlignTop
+                horizontalAlignment: Text.AlignLeft//Text.AlignRight
                 wrapMode: Text.WrapAnywhere
             }
         }
@@ -95,9 +110,14 @@ Item {
             id:remind_container
             width: 240
             height: 30
-            anchors.right: parent.right
-            anchors.rightMargin: 20
-            anchors.top: name_container.bottom
+//            color: "yellow"
+//            anchors.right: parent.right
+//            anchors.rightMargin: 20
+            anchors.left: last_time_container.right
+            anchors.leftMargin: 0
+            anchors.verticalCenter: parent.verticalCenter
+
+//            anchors.top: name_container.bottom
             Text {
                 id:remind_txt
                 text: "剩余:"+next_countdown+"h"
@@ -106,8 +126,8 @@ Item {
                 width: parent.width
                 font.family: "Ubuntu"
                 font.pixelSize: 25
-                verticalAlignment: Text.AlignTop
-                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter//Text.AlignTop
+                horizontalAlignment: Text.AlignLeft//Text.AlignRight
                 wrapMode: Text.WrapAnywhere
             }
         }
@@ -148,7 +168,7 @@ Item {
 
         // 根据列表的内容的位置，计算当前窗口显示的第一条的索引
         // 当前位置获取的坐标,更新会慢一拍
-        maintain_info_fs = my_list.contentY / 48 ;
+//        maintain_info_fs = my_list.contentY / 48 ;
 //        console.debug("onFocusChanged...");
 //        console.debug("Y : "+my_list.contentY +" head: "+maintain_info_query_for_usr_fs.current_head_index + "Index: " +my_list.currentIndex);
         headIndexChanged();

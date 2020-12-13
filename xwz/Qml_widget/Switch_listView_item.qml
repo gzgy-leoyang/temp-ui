@@ -48,7 +48,7 @@ Rectangle{
 
         Text {
             id:m_value
-            text: value
+            text: typeof(value)==="undefined" ? "" : value
             anchors.left: m_name.right
             anchors.verticalCenter: parent.verticalCenter
             color: text_color
@@ -60,7 +60,7 @@ Rectangle{
             id:m_unit
             anchors.left: m_value.right
             anchors.margins: 4
-            text: unit
+            text:typeof(unit)==="undefined" ? "" : unit
             anchors.verticalCenter: parent.verticalCenter
 
             color: text_color
@@ -89,7 +89,7 @@ Rectangle{
 
             Switch {
                 id: control
-//                checked: (display==="1")?true:false;
+                checked: display//(display==="1")?false:false;
                 width: 130;
                 height: 50;
                 anchors.centerIn: parent
@@ -113,10 +113,6 @@ Rectangle{
                         color: switcher_root.available?"#FFFFFF":"#C0C0C0"
                     }
                 }
-
-                onCheckedChanged: {
-                    console.log("checked")
-                }
             }
         }
 
@@ -136,7 +132,6 @@ Rectangle{
         }
     }
 
-
     onFocusChanged: {
     }
 
@@ -146,9 +141,7 @@ Rectangle{
             my_list.focus = true;
             my_list.currentIndex = index;
             item_clicked();
-            console.log("index = ", index)
-
-            control.checked = ~control.checked
+//            control.checked = !control.checked
         }
     }
 }
