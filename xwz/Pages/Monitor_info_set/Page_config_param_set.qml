@@ -19,9 +19,9 @@ FocusScope{
     property string page_name: "hydraulic_iparam_set"
 
 
-    Page_moniter_info_set_data{
-        id: data_src
-    }
+//    Page_moniter_info_set_data{
+//        id: data_src
+//    }
 
     // 页面构造完成时,立即设置默认焦点组件
     Component.onCompleted: {
@@ -74,8 +74,12 @@ FocusScope{
                 highlightMoveDuration: 10   //设定高亮代理的移动速度，实质上是指切换动作的速度；暂时找到Value与每秒切换像素点数量的关系，value = 10效果良好。
                 highlightFollowsCurrentItem: true
 
-                model:data_src.model
-                delegate: Switch_listView_item{}
+                model:moniter_info.config_set_model//data_src.model
+                delegate: Switch_listView_item{
+                    onItem_clicked: {
+                        moniter_info.visible_changed( my_list.currentIndex )
+                    }
+                }
                 onContentYChanged: {
 //                    list_scroll_bar.barY = my_list.contentY/my_list.contentHeight*list_scroll_bar.height
                 }

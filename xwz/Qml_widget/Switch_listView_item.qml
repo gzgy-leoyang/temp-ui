@@ -147,6 +147,8 @@ Rectangle{
             my_list.currentIndex = index;
             item_clicked();
             console.log("index = ", index)
+
+            control.checked = ~control.checked
         }
     }
 }

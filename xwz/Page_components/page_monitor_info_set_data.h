@@ -89,39 +89,91 @@ class Page_moniter_info_set_data : public QObject
 public:
     Page_moniter_info_set_data( QObject *parent = 0);
 
-    Q_PROPERTY( MoniterInfoSet_Model* set_model  READ get_set_model NOTIFY set_model_changed)
-    Q_PROPERTY( MoniterParams_Model*  model      READ get_model     NOTIFY model_changed)
 
-    MoniterInfoSet_Model* get_set_model(void) ;
-    MoniterParams_Model* get_model(void) ;
+
+    Q_PROPERTY( MoniterInfoSet_Model* engine_set_model     READ get_engine_set_model     NOTIFY engine_set_model_changed)
+    Q_PROPERTY( MoniterInfoSet_Model* hydraulic_set_model  READ get_hydraulic_set_model  NOTIFY hydraulic_set_model_changed)
+    Q_PROPERTY( MoniterInfoSet_Model* electrical_set_model READ get_electrical_set_model NOTIFY electrical_set_model_changed)
+    Q_PROPERTY( MoniterInfoSet_Model* config_set_model     READ get_config_set_model     NOTIFY config_set_model_changed)
+    Q_PROPERTY( MoniterParams_Model*  model      READ get_model     NOTIFY model_changed)
+    /// 设置页面模型，四个
+    MoniterInfoSet_Model* get_engine_set_model(void) ;
+    MoniterInfoSet_Model* get_hydraulic_set_model(void) ;
+    MoniterInfoSet_Model* get_electrical_set_model(void) ;
+    MoniterInfoSet_Model* get_config_set_model(void) ;
+    MoniterParams_Model* get_model(void) ; /// 合并模型
 
     Q_INVOKABLE void visible_changed( int _index );
 
 signals:
+    void engine_set_model_changed();
+    void hydraulic_set_model_changed();
+    void electrical_set_model_changed();
+    void config_set_model_changed();
     void model_changed();
-    void set_model_changed();
 
 public slots:
     void slot_timer();
 
 private:
+    QTimer *timer;
+
     int m_model_type;
-    MoniterInfoSet_Model* m_set_model;
+    MoniterInfoSet_Model* m_engine_set_model;
+    MoniterInfoSet_Model* m_hydraulic_set_model;
+    MoniterInfoSet_Model* m_electrical_set_model;
+    MoniterInfoSet_Model* m_config_set_model;
     MoniterParams_Model*  m_model;
 
-    QTimer *timer;
+
 
     int m_sizeof_params_list;
     MoniterSet_param_t* m_pParams_list;
-    MoniterSet_param_t moniter_param_list[_SIZEOF_PARAM_LIST] = {
-        {.name="发动机转速",.index= 0,
-        .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
-        .decimal=0,.unit="rpm",.str_list={},.visible=true},
 
-        {.name="转速2",.index= 0,
-        .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
-        .decimal=0,.unit="rpm",.str_list={},.visible=true}
-    };
+    struct Param_set_list_t{
+        ///////////
+        MoniterSet_param_t moniter_param_list_engine[_SIZEOF_PARAM_LIST] = {
+            {.name="发动机参数1",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true},
+
+            {.name="发动机参数2",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true}
+        };
+
+        MoniterSet_param_t moniter_param_list_hydraulic[_SIZEOF_PARAM_LIST] = {
+            {.name="液压参数1",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true},
+
+            {.name="液压参数2",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true}
+        };
+
+        MoniterSet_param_t moniter_param_list_electrical[_SIZEOF_PARAM_LIST] = {
+            {.name="电气参数1",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true},
+
+            {.name="电气参数2",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true}
+        };
+
+        MoniterSet_param_t moniter_param_list_config[_SIZEOF_PARAM_LIST] = {
+            {.name="配置参数1",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true},
+
+            {.name="配置参数2",.index= 0,
+            .ratio=1,.raw=0,.max=65535,.min=0,.offset=0,
+            .decimal=0,.unit="rpm",.str_list={},.visible=true}
+        };
+    }Param_set_list;
+
+
 };
 
 #endif // PAGE_MONITOR_INFO_SET_DATA_H
