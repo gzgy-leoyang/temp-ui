@@ -116,19 +116,25 @@ private:
     void load_config( QString _file_name, MoniterSet_param_t* _list,int _size );
     void save_config( QString _file_name, MoniterSet_param_t* _list,int _size );
 
+    void slot_timer_refresh_params();
+    void slot_timer_refresh_set_page(MoniterSet_param_t* _param_list, MoniterInfoSet_Model* _model,int _size );
+
     QTimer *timer;
     int m_model_type;
-    MoniterInfoSet_Model* m_engine_set_model;
-    MoniterInfoSet_Model* m_hydraulic_set_model;
-    MoniterInfoSet_Model* m_electrical_set_model;
-    MoniterInfoSet_Model* m_config_set_model;
-    MoniterParams_Model*  m_model;
-
     MoniterInfoSet_Model* m_current_set_model;
     MoniterSet_param_t*   m_current_set_list;
     int m_sizeof_params_list;
     MoniterSet_param_t* m_pParams_list;
 
+    /// 全运行参数数据源与对应的model
+    QList<MoniterSet_param_t*> m_all_param_list;
+    MoniterParams_Model*  m_model;
+
+    /// 各设置界面的数据源与对应的model
+    MoniterInfoSet_Model* m_engine_set_model;
+    MoniterInfoSet_Model* m_hydraulic_set_model;
+    MoniterInfoSet_Model* m_electrical_set_model;
+    MoniterInfoSet_Model* m_config_set_model;
     struct Param_set_list_t{
         ///////////
         MoniterSet_param_t moniter_param_list_engine[_SIZEOF_PARAM_LIST] = {

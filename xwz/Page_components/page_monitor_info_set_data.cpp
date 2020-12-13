@@ -184,9 +184,9 @@ Page_moniter_info_set_data::
 Page_moniter_info_set_data(QObject *parent):
     QObject(parent)
 {
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(slot_timer()));
-//    timer->start(500);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(slot_timer()));
+    timer->start(500);
 
     int size = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
     load_config( QString("engine_set.config"),
@@ -320,8 +320,8 @@ visible_changed( int _index )
     bool vv = (m_current_set_list+_index)->visible;
 
     //int val = g_can_data->get( (m_current_set_list+_index)->index );
-    QString val_str ;
-    val_str.setNum( val,'f',(m_current_set_list+_index)->decimal );
+    //QString val_str ;
+    //val_str.setNum( val,'f',(m_current_set_list+_index)->decimal );
 
 
     if ( vv ){
@@ -361,7 +361,7 @@ get_hydraulic_set_model(void)
 
     m_hydraulic_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_hydraulic;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
@@ -380,7 +380,7 @@ get_electrical_set_model(void)
 
     m_electrical_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_electrical;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
@@ -399,7 +399,7 @@ get_config_set_model(void)
 
     m_config_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_config;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
@@ -415,56 +415,162 @@ get_config_set_model(void)
 MoniterParams_Model* Page_moniter_info_set_data::
 get_model(void)
 {
+    m_all_param_list.clear();
     m_model_type = 0 ;
 
     m_model = new MoniterParams_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_engine;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_hydraulic;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_electrical;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_config;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     return m_model ;
 }
 
+void Page_moniter_info_set_data::
+slot_timer_refresh_set_page( MoniterSet_param_t* _param_list, MoniterInfoSet_Model* _model,int _size )
+{
+    qDebug()<<">>>>>>";
+    for ( int i=0;i<_size;i++ ){
+        MoniterSet_param_t t = *(_param_list+i);
+         // int Can_data::get(t.index)
+        qDebug()<<"NAME:"<<t.name;
+
+        /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
+        //uint32_t temp = g_can_data->get( t.index );
+        uint32_t temp = 0;/// 临时调试用
+        if ( temp > t.max ){
+            temp = t.max;
+        } else if( temp < t.min ){
+            temp = t.min;
+        }
+
+        /// 显示数值或字符串
+        QString val_str;
+        if ( t.str_list.isEmpty() ){
+            /// 如当前字符串列表长度为0，则为数值型显示
+            /// 按照描述，调整缩放倍率，偏移等，转为字符串
+            double db_temp = ((temp * t.ratio) - t.offset);
+            val_str = QString::number( db_temp,'f',t.decimal);
+        } else {
+            /// 如当前参数条目中描述了字符串，取对应的字符串
+            if ( temp >= t.str_list.count() ){
+                val_str = "--";
+            } else {
+                val_str = t.str_list[temp];
+            }
+        }
+        ///字符串刷新到模型中
+        _model->refresh(i,val_str,t.visible);
+    }
+}
+
+
+void Page_moniter_info_set_data::
+slot_timer_refresh_params()
+{
+    int size = m_all_param_list.count();
+    for ( int i=0;i<size;i++ ){
+        MoniterSet_param_t* t = m_all_param_list.at(i);
+        qDebug()<<"NAME:"<<t->name;
+        /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
+        //uint32_t temp = g_can_data->get( t->index );
+        uint32_t temp = 0;/// 临时调试用
+        if ( temp > t->max ){
+            temp = t->max;
+        } else if( temp < t->min ){
+            temp = t->min;
+        }
+
+        /// 显示数值或字符串
+        QString val_str;
+        if ( t->str_list.isEmpty() ){
+            /// 如当前字符串列表长度为0，则为数值型显示
+            /// 按照描述，调整缩放倍率，偏移等，转为字符串
+            double db_temp = ((temp * t->ratio) - t->offset);
+            val_str = QString::number( db_temp,'f',t->decimal);
+        } else {
+            /// 如当前参数条目中描述了字符串，取对应的字符串
+            if ( temp >= t->str_list.count() ){
+                val_str = "--";
+            } else {
+                val_str = t->str_list[temp];
+            }
+        }
+        ///字符串刷新到模型中
+        m_model->refresh(i,val_str);
+    }
+}
 
 void Page_moniter_info_set_data::
 slot_timer()
 {
+    int ii = 0;
+    switch( m_model_type ){
+    case 0:
+        slot_timer_refresh_params();
+        break;
+    case 1:
+        ii = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_engine,
+                                       m_engine_set_model,ii);
+        break;
+    case 2:
+        ii = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_hydraulic,
+                                       m_hydraulic_set_model,ii);
+        break;
+    case 3:
+        ii = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_electrical,
+                                       m_electrical_set_model,ii);
+        break;
+    case 4:
+        ii = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_config,
+                                       m_config_set_model,ii);
+        break;
+    }
+/*
     for ( int i=0;i<m_sizeof_params_list;i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
 
@@ -506,6 +612,7 @@ slot_timer()
             break;
         }
     }
+    */
 }
 
 
