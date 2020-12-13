@@ -19,9 +19,9 @@ FocusScope{
     property string page_name: "tgu_param_info_for_usr"
 
 
-    Page_moniter_info_set_data{
-        id: data_src
-    }
+//    Page_moniter_info_set_data{
+//        id: data_src
+//    }
 
     // 页面构造完成时,立即设置默认焦点组件
     Component.onCompleted: {

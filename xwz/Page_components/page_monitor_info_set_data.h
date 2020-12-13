@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QStringList>
 #include <QAbstractListModel>
+#include <QFile>
 
 #define _SIZEOF_PARAM_LIST (2)
 
@@ -61,11 +62,10 @@ public:
 
     bool pushData( MoniterInfoSet_param* _entry );
     void refresh( const int& _index ,const QString& _str_val, const bool& _visible);
+    bool get_visible_property( int _index );
 private:
     QList< MoniterInfoSet_param* > m_params_list;//被封装的数组
 };
-
-
 ////////////////
 class Page_moniter_info_set_data : public QObject
 {
@@ -85,11 +85,8 @@ class Page_moniter_info_set_data : public QObject
         QStringList str_list;
         bool    visible; //是否显示
     }MoniterSet_param_t;
-
 public:
     Page_moniter_info_set_data( QObject *parent = 0);
-
-
 
     Q_PROPERTY( MoniterInfoSet_Model* engine_set_model     READ get_engine_set_model     NOTIFY engine_set_model_changed)
     Q_PROPERTY( MoniterInfoSet_Model* hydraulic_set_model  READ get_hydraulic_set_model  NOTIFY hydraulic_set_model_changed)
@@ -104,7 +101,7 @@ public:
     MoniterParams_Model* get_model(void) ; /// 合并模型
 
     Q_INVOKABLE void visible_changed( int _index );
-
+    Q_INVOKABLE void save_modify(void);
 signals:
     void engine_set_model_changed();
     void hydraulic_set_model_changed();
@@ -116,8 +113,10 @@ public slots:
     void slot_timer();
 
 private:
-    QTimer *timer;
+    void load_config( QString _file_name, MoniterSet_param_t* _list,int _size );
+    void save_config( QString _file_name, MoniterSet_param_t* _list,int _size );
 
+    QTimer *timer;
     int m_model_type;
     MoniterInfoSet_Model* m_engine_set_model;
     MoniterInfoSet_Model* m_hydraulic_set_model;
@@ -125,8 +124,8 @@ private:
     MoniterInfoSet_Model* m_config_set_model;
     MoniterParams_Model*  m_model;
 
-
-
+    MoniterInfoSet_Model* m_current_set_model;
+    MoniterSet_param_t*   m_current_set_list;
     int m_sizeof_params_list;
     MoniterSet_param_t* m_pParams_list;
 

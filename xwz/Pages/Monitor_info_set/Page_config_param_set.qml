@@ -44,6 +44,7 @@ FocusScope{
             text: "配置"
 
             onPicked: {
+                moniter_info.save_modify();
                 root_stack.pop();
             }
         }

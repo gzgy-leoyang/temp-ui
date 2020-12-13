@@ -47,6 +47,7 @@ FocusScope{
             text: "发动机"
 
             onPicked: {
+                moniter_info.save_modify();
                 root_stack.pop();
             }
         }
