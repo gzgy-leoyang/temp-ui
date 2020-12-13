@@ -165,8 +165,16 @@ refresh( const int& _index ,const QString& _str_val, const bool& _visible )
     QModelIndex indexxx = index(_index);
     tt->m_value = _str_val;
     tt->m_visible = _visible;
+    qDebug()<<"tt->m_value"<<tt->m_value<<"tt->m_visible"<<tt->m_visible;
     emit QAbstractItemModel::dataChanged(indexxx,indexxx);
 }
+
+bool MoniterInfoSet_Model::
+get_visible_property( int _index )
+{
+    return m_params_list.at(_index)->m_visible;
+}
+
 /// <<< 模型
 /////////////////
 
@@ -176,40 +184,152 @@ Page_moniter_info_set_data::
 Page_moniter_info_set_data(QObject *parent):
     QObject(parent)
 {
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(slot_timer()));
-//    timer->start(500);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(slot_timer()));
+    timer->start(500);
+
+    int size = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
+    load_config( QString("engine_set.config"),
+                 (MoniterSet_param_t*)&Param_set_list.moniter_param_list_engine,
+                 size);
+
+    size = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
+    load_config( QString("hydraulic_set.config"),
+                 (MoniterSet_param_t*)&Param_set_list.moniter_param_list_hydraulic,
+                 size);
+
+    size = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
+    load_config( QString("electrical_set.config"),
+                 (MoniterSet_param_t*)&Param_set_list.moniter_param_list_electrical,
+                 size);
+
+    size = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
+    load_config( QString("config_set.config"),
+                 (MoniterSet_param_t*)&Param_set_list.moniter_param_list_config,
+                 size);
+
 
     m_model_type = 0 ;
 }
 
 void Page_moniter_info_set_data::
-visible_changed( int _index )
+save_modify(void)
 {
-    if ( _index >= m_sizeof_params_list ){
-        return ;
-    }
 
-    MoniterSet_param_t* pParams = NULL;
+    QString file_name;
+    MoniterSet_param_t* pList = NULL;
+    int size = 0;
     switch ( m_model_type ){
     case 1:
-        pParams = &Param_set_list.moniter_param_list_engine[_index];
+        file_name = "engine_set.config";
+        pList = (MoniterSet_param_t*)&Param_set_list.moniter_param_list_engine;
+        size = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
         break;
     case 2:
-        pParams = &Param_set_list.moniter_param_list_hydraulic[_index];
+        file_name = "hydraulic_set.config";
+        pList = (MoniterSet_param_t*)&Param_set_list.moniter_param_list_hydraulic;
+        size = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
         break;
     case 3:
-        pParams = &Param_set_list.moniter_param_list_electrical[_index];
+        file_name = "electrical_set.config";
+        pList = (MoniterSet_param_t*)&Param_set_list.moniter_param_list_electrical;
+        size = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
         break;
     case 4:
-        pParams = &Param_set_list.moniter_param_list_config[_index];
+        file_name = "config_set.config";
+        pList = (MoniterSet_param_t*)&Param_set_list.moniter_param_list_config;
+        size = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
         break;
     }
+    if ( (pList != NULL) && ( !file_name.isEmpty() )){
+        save_config( file_name,pList,size);
+    }
+}
 
-    if ( pParams->visible == true ){
-        pParams->visible = false;
+void Page_moniter_info_set_data::
+load_config( QString _file_name, MoniterSet_param_t* _list,int _size )
+{
+    uint8_t buf[50] = {0};
+
+    int ret = 0;
+    QFile in_file(_file_name);
+    if ( in_file.exists()){
+        if ( in_file.open( QIODevice::ReadOnly) ){
+            ret = in_file.read((char*)buf,50);
+            in_file.close();
+        }
     } else {
-        pParams->visible = true;
+        if ( in_file.open( QIODevice::ReadWrite ) ) {
+            /// 初始，默认全1，所有参数都显示
+            memset( buf,1,50);
+            in_file.seek(0);
+            ret = in_file.write( (char*)buf,50);
+            in_file.close();
+        }
+    }
+
+    if ( _size > 50 ){
+        _size = 50;
+    }
+
+    qDebug()<<"Load Config:"<<_file_name;
+    for ( int i=0; i<_size; i++ ){
+//        MoniterSet_param_t* tt = (MoniterSet_param_t*)&(_list + i);
+        if ( buf[i] == 1 ){
+            (_list + i)->visible = true;
+        } else {
+            (_list + i)->visible = false;
+        }
+        printf("[%i]=%i (%i)\n",i,buf[i],(_list + i)->visible);
+    }
+    return ;
+}
+
+void Page_moniter_info_set_data::
+save_config( QString _file_name, MoniterSet_param_t* _list,int _size )
+{
+    uint8_t buf[50] = {0};
+    int ret = 0;
+    QFile in_file(_file_name);
+
+    memset( buf,1,50);
+    for ( int i=0; i<_size; i++ ){
+        MoniterSet_param_t t = *(_list+i);
+        if ( t.visible == false ){
+            buf[i] = 0;
+        }
+    }
+    if ( in_file.exists()){
+        if  ( in_file.open( QIODevice::ReadWrite ) ) {
+
+            if ( _size > 50 ){
+                _size = 50;
+            }
+            in_file.seek(0);
+            ret = in_file.write( (char*)buf,50);
+            in_file.close();
+        }
+    }
+    return ;
+}
+
+void Page_moniter_info_set_data::
+visible_changed( int _index )
+{
+    /// 修改数据源，之后保存需要该数据源
+    bool vv = (m_current_set_list+_index)->visible;
+
+    //int val = g_can_data->get( (m_current_set_list+_index)->index );
+    //QString val_str ;
+    //val_str.setNum( val,'f',(m_current_set_list+_index)->decimal );
+
+
+    if ( vv ){
+        (m_current_set_list+_index)->visible = false;
+        m_current_set_model->refresh(_index,"val",false );
+    } else {
+        m_current_set_model->refresh(_index,"oo",true );
+        (m_current_set_list+_index)->visible = true;
     }
 }
 
@@ -225,9 +345,12 @@ get_engine_set_model(void)
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
+        qDebug()<<"get_engine_set_model..."<<i<<t.visible;
         MoniterInfoSet_param* tt = new MoniterInfoSet_param(t.name,"...",t.unit,t.visible,this);
         m_engine_set_model->pushData(tt);
     }
+    m_current_set_model = m_engine_set_model;
+    m_current_set_list  = Param_set_list.moniter_param_list_engine;
     return m_engine_set_model;
 }
 
@@ -238,13 +361,15 @@ get_hydraulic_set_model(void)
 
     m_hydraulic_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_hydraulic;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         MoniterInfoSet_param* tt = new MoniterInfoSet_param(t.name,"...",t.unit,t.visible,this);
         m_hydraulic_set_model->pushData(tt);
     }
+    m_current_set_model = m_hydraulic_set_model;
+    m_current_set_list  = Param_set_list.moniter_param_list_hydraulic;
     return m_hydraulic_set_model;
 }
 
@@ -255,13 +380,15 @@ get_electrical_set_model(void)
 
     m_electrical_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_electrical;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         MoniterInfoSet_param* tt = new MoniterInfoSet_param(t.name,"...",t.unit,t.visible,this);
         m_electrical_set_model->pushData(tt);
     }
+    m_current_set_model = m_electrical_set_model;
+    m_current_set_list  = Param_set_list.moniter_param_list_electrical;
     return m_electrical_set_model;
 }
 
@@ -272,13 +399,15 @@ get_config_set_model(void)
 
     m_config_set_model = new MoniterInfoSet_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_config;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
 
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         MoniterInfoSet_param* tt = new MoniterInfoSet_param(t.name,"...",t.unit,t.visible,this);
         m_config_set_model->pushData(tt);
     }
+    m_current_set_model = m_config_set_model;
+    m_current_set_list  = Param_set_list.moniter_param_list_config;
     return m_config_set_model;
 }
 
@@ -286,56 +415,162 @@ get_config_set_model(void)
 MoniterParams_Model* Page_moniter_info_set_data::
 get_model(void)
 {
+    m_all_param_list.clear();
     m_model_type = 0 ;
 
     m_model = new MoniterParams_Model(this);
     m_pParams_list = Param_set_list.moniter_param_list_engine;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_hydraulic;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_electrical;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     m_pParams_list = Param_set_list.moniter_param_list_config;
-    m_sizeof_params_list = _SIZEOF_PARAM_LIST;
+    m_sizeof_params_list = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
     for ( int i=0; i<m_sizeof_params_list; i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
         if ( t.visible == true ){
             Moniter_param* tt = new Moniter_param(t.name,"...",t.unit,this);
             m_model->pushData(tt);
+            m_all_param_list.append( (MoniterSet_param_t*)(m_pParams_list+i) );
         }
     }
 
     return m_model ;
 }
 
+void Page_moniter_info_set_data::
+slot_timer_refresh_set_page( MoniterSet_param_t* _param_list, MoniterInfoSet_Model* _model,int _size )
+{
+    qDebug()<<">>>>>>";
+    for ( int i=0;i<_size;i++ ){
+        MoniterSet_param_t t = *(_param_list+i);
+         // int Can_data::get(t.index)
+        qDebug()<<"NAME:"<<t.name;
+
+        /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
+        //uint32_t temp = g_can_data->get( t.index );
+        uint32_t temp = 0;/// 临时调试用
+        if ( temp > t.max ){
+            temp = t.max;
+        } else if( temp < t.min ){
+            temp = t.min;
+        }
+
+        /// 显示数值或字符串
+        QString val_str;
+        if ( t.str_list.isEmpty() ){
+            /// 如当前字符串列表长度为0，则为数值型显示
+            /// 按照描述，调整缩放倍率，偏移等，转为字符串
+            double db_temp = ((temp * t.ratio) - t.offset);
+            val_str = QString::number( db_temp,'f',t.decimal);
+        } else {
+            /// 如当前参数条目中描述了字符串，取对应的字符串
+            if ( temp >= t.str_list.count() ){
+                val_str = "--";
+            } else {
+                val_str = t.str_list[temp];
+            }
+        }
+        ///字符串刷新到模型中
+        _model->refresh(i,val_str,t.visible);
+    }
+}
+
+
+void Page_moniter_info_set_data::
+slot_timer_refresh_params()
+{
+    int size = m_all_param_list.count();
+    for ( int i=0;i<size;i++ ){
+        MoniterSet_param_t* t = m_all_param_list.at(i);
+        qDebug()<<"NAME:"<<t->name;
+        /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
+        //uint32_t temp = g_can_data->get( t->index );
+        uint32_t temp = 0;/// 临时调试用
+        if ( temp > t->max ){
+            temp = t->max;
+        } else if( temp < t->min ){
+            temp = t->min;
+        }
+
+        /// 显示数值或字符串
+        QString val_str;
+        if ( t->str_list.isEmpty() ){
+            /// 如当前字符串列表长度为0，则为数值型显示
+            /// 按照描述，调整缩放倍率，偏移等，转为字符串
+            double db_temp = ((temp * t->ratio) - t->offset);
+            val_str = QString::number( db_temp,'f',t->decimal);
+        } else {
+            /// 如当前参数条目中描述了字符串，取对应的字符串
+            if ( temp >= t->str_list.count() ){
+                val_str = "--";
+            } else {
+                val_str = t->str_list[temp];
+            }
+        }
+        ///字符串刷新到模型中
+        m_model->refresh(i,val_str);
+    }
+}
 
 void Page_moniter_info_set_data::
 slot_timer()
 {
+    int ii = 0;
+    switch( m_model_type ){
+    case 0:
+        slot_timer_refresh_params();
+        break;
+    case 1:
+        ii = sizeof(Param_set_list.moniter_param_list_engine)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_engine,
+                                       m_engine_set_model,ii);
+        break;
+    case 2:
+        ii = sizeof(Param_set_list.moniter_param_list_hydraulic)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_hydraulic,
+                                       m_hydraulic_set_model,ii);
+        break;
+    case 3:
+        ii = sizeof(Param_set_list.moniter_param_list_electrical)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_electrical,
+                                       m_electrical_set_model,ii);
+        break;
+    case 4:
+        ii = sizeof(Param_set_list.moniter_param_list_config)/sizeof(MoniterSet_param_t);
+        slot_timer_refresh_set_page( (MoniterSet_param_t*)&Param_set_list.moniter_param_list_config,
+                                       m_config_set_model,ii);
+        break;
+    }
+/*
     for ( int i=0;i<m_sizeof_params_list;i++ ){
         MoniterSet_param_t t = *(m_pParams_list+i);
 
@@ -377,6 +612,7 @@ slot_timer()
             break;
         }
     }
+    */
 }
 
 

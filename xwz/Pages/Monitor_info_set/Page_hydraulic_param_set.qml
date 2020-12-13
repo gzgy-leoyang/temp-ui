@@ -40,6 +40,7 @@ FocusScope{
             text: "液压"
 
             onPicked: {
+                moniter_info.save_modify();
                 root_stack.pop();
             }
         }

@@ -89,7 +89,7 @@ Rectangle{
 
             Switch {
                 id: control
-                checked: display//(display==="1")?false:false;
+                checked: display?true:false;
                 width: 130;
                 height: 50;
                 anchors.centerIn: parent
@@ -141,7 +141,9 @@ Rectangle{
             my_list.focus = true;
             my_list.currentIndex = index;
             item_clicked();
-//            control.checked = !control.checked
+            console.log("index = ", index)
+
+//            control.checked = ~control.checked
         }
     }
 }

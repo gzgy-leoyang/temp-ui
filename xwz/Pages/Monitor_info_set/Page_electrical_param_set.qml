@@ -39,6 +39,7 @@ FocusScope{
             text: "电气"
 
             onPicked: {
+                moniter_info.save_modify();
                 root_stack.pop();
             }
         }
