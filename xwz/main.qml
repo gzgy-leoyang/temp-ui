@@ -17,7 +17,6 @@ Window {
             width: 1280
             height: 128
             color: "gray"
-
             Text{
                 id: top_text
                 text: "top"
