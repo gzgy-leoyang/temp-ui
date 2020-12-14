@@ -1,7 +1,7 @@
 #include "main.h"
 #include "Page_components/page_monitor_info_set_data.h"
 #include "Data_components/dev_maintain.h"
-#include "Page_components/page_setting_data.h"
+#include "Pages/Setting_page/page_setting_data.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
