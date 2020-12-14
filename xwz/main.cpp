@@ -1,6 +1,7 @@
 #include "main.h"
 #include "Page_components/page_monitor_info_set_data.h"
 #include "Data_components/dev_maintain.h"
+#include "Page_components/page_setting_data.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -17,6 +18,7 @@ void page_data_regeist(void)
     qmlRegisterType<Page_moniter_info_set_data>( "qml.custom.Page_moniter_info_set_data", 1, 0, "Page_moniter_info_set_data" );
     qmlRegisterType<Page_maintain_data>( "qml.custom.Page_maintain_data", 1, 0, "Page_maintain_data" );
     qmlRegisterType<Page_maintain_set_data>( "qml.custom.Page_maintain_set_data", 1, 0, "Page_maintain_set_data" );
+    qmlRegisterType<Page_setting_data>( "qml.custom.Page_Setting_Data", 1, 0, "Page_Setting_Data" );
 
 }
 

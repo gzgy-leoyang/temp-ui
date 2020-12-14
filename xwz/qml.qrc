@@ -18,5 +18,25 @@
         <file>Pages/right_arrow_XL.png</file>
         <file>Pages/Page_maintain_info.qml</file>
         <file>Pages/Page_maintain_info_set.qml</file>
+        <file>Pages/Setting_page/Setting.qml</file>
+        <file>Qml_widget/Key_board/VkButton.qml</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard.qml</file>
+        <file>Qml_widget/Key_board/Key_board.qml</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/black/backspace.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/black/delete.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/black/enter.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/black/Shift.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/black/space.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/backspace.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/Button.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/Button1.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/CaseSw.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/delete.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/enter.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/moveKey.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/Shift.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/space.png</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/VirtualKeyboard.qml</file>
+        <file>Qml_widget/Key_board/VirtualKeyboard/VkButton.qml</file>
     </qresource>
 </RCC>

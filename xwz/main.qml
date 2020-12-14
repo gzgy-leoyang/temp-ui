@@ -8,6 +8,8 @@ Window {
     width: 1280
     height: 800
 
+    property  Item current_page : null
+
     Rectangle{
         id: root_rect_container
         anchors.fill: parent
