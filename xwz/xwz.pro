@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     Page_components/page_maintain_data.cpp \
     Page_components/page_maintain_set_data.cpp \
     Pages/Setting_page/page_setting_data.cpp \
-    Pages/Function_page/page_function_data.cpp
+    Pages/Function_page/page_function_data.cpp \
+    Pages/Initialize_setting/Machine_info/page_machine_info_data.cpp
 
 RESOURCES += qml.qrc
 
@@ -43,4 +44,5 @@ HEADERS += \
     main.h \
     Page_components/page_maintain_set_data.h \
     Pages/Setting_page/page_setting_data.h \
-    Pages/Function_page/page_function_data.h
+    Pages/Function_page/page_function_data.h \
+    Pages/Initialize_setting/Machine_info/page_machine_info_data.h

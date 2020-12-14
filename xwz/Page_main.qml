@@ -85,9 +85,19 @@ FocusScope{
                     root_stack.push({item:page, destroyOnPop:true});
                 }
             }
+
+            Button {
+                width: 100
+                height: 80
+                text: "初始化设置"
+                onClicked: {
+                    var cmp = Qt.createComponent( "qrc:/Pages/Initialize_setting/Page_Initialize_set.qml" );
+                    var page = cmp.createObject(root_rect_container,{});
+                    root_stack.push({item:page, destroyOnPop:true});
+                }
+            }
         }
     }
-
 }
 
 

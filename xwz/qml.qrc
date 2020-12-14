@@ -39,5 +39,7 @@
         <file>Qml_widget/Key_board/VirtualKeyboard/VirtualKeyboard.qml</file>
         <file>Qml_widget/Key_board/VirtualKeyboard/VkButton.qml</file>
         <file>Pages/Function_page/Function.qml</file>
+        <file>Pages/Initialize_setting/Page_Initialize_set.qml</file>
+        <file>Pages/Initialize_setting/Machine_info/Machine_info.qml</file>
     </qresource>
 </RCC>
