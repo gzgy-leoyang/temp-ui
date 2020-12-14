@@ -1,0 +1,7 @@
+{
+    "coolant_temp_comp": 3,
+    "hydraulic_temp_comp": -5,
+    "idle_delay": 6,
+    "machine_model": "PPP",
+    "machine_sn": "FGH45"
+}
