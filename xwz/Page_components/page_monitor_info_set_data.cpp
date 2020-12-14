@@ -469,11 +469,9 @@ get_model(void)
 void Page_moniter_info_set_data::
 slot_timer_refresh_set_page( MoniterSet_param_t* _param_list, MoniterInfoSet_Model* _model,int _size )
 {
-    qDebug()<<">>>>>>";
     for ( int i=0;i<_size;i++ ){
         MoniterSet_param_t t = *(_param_list+i);
          // int Can_data::get(t.index)
-        qDebug()<<"NAME:"<<t.name;
 
         /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
         //uint32_t temp = g_can_data->get( t.index );
@@ -511,7 +509,6 @@ slot_timer_refresh_params()
     int size = m_all_param_list.count();
     for ( int i=0;i<size;i++ ){
         MoniterSet_param_t* t = m_all_param_list.at(i);
-        qDebug()<<"NAME:"<<t->name;
         /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
         //uint32_t temp = g_can_data->get( t->index );
         uint32_t temp = 0;/// 临时调试用
@@ -570,49 +567,6 @@ slot_timer()
                                        m_config_set_model,ii);
         break;
     }
-/*
-    for ( int i=0;i<m_sizeof_params_list;i++ ){
-        MoniterSet_param_t t = *(m_pParams_list+i);
-
-        /// 注意：通过 g_can_data->get( t.index ) 获取实际数据内容，当前固定为0 ！！！
-        uint32_t temp = 0;//g_can_data->get( t.index );
-        if ( temp > t.max ){
-            temp = t.max;
-        } else if( temp < t.min ){
-            temp = t.min;
-        }
-
-        QString val_str;
-        if ( t.str_list.isEmpty() ){
-            double db_temp = ((temp * t.ratio) - t.offset);
-            val_str = QString::number( db_temp,'f',t.decimal);
-        } else {
-            if ( temp >= t.str_list.count() ){
-                val_str = "--";
-            } else {
-                val_str = t.str_list[temp];
-            }
-        }
-
-        switch ( m_model_type ){
-        case 0:
-            m_model->refresh(i,val_str);
-            break;
-        case 1:
-            m_engine_set_model->refresh(i,val_str,t.visible);
-            break;
-        case 2:
-            m_hydraulic_set_model->refresh(i,val_str,t.visible);
-            break;
-        case 3:
-            m_electrical_set_model->refresh(i,val_str,t.visible);
-            break;
-        case 4:
-            m_config_set_model->refresh(i,val_str,t.visible);
-            break;
-        }
-    }
-    */
 }
 
 

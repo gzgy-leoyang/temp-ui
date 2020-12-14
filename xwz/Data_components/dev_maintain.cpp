@@ -262,7 +262,8 @@ pushData(Component_entry* _entry)
 }
 
 
-Dev_maintain::Dev_maintain(QObject *parent) : QObject(parent)
+Dev_maintain::
+Dev_maintain(QObject *parent) : QObject(parent)
 {
 //    double cur_hour = 30.0;//(double)m_hourmeter_info.idle_hour / 360.0;
     m_model = new Maintain_Model();
