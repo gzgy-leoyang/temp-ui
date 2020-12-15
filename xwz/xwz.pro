@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     Pages/Initialize_setting/Machine_info/page_machine_info_data.cpp \
     Pages/Initialize_setting/Boot_mode/page_boot_mode_data.cpp \
     Pages/Initialize_setting/Unit_setting/page_unit_set_data.cpp \
-    Pages/Initialize_setting/dev_configuration.cpp
+    Pages/Initialize_setting/dev_configuration.cpp \
+    Pages/Factory_initialize/page_factory_init_data.cpp
 
 RESOURCES += qml.qrc
 
@@ -51,4 +52,5 @@ HEADERS += \
     Pages/Initialize_setting/Machine_info/page_machine_info_data.h \
     Pages/Initialize_setting/Boot_mode/page_boot_mode_data.h \
     Pages/Initialize_setting/Unit_setting/page_unit_set_data.h \
-    Pages/Initialize_setting/dev_configuration.h
+    Pages/Initialize_setting/dev_configuration.h \
+    Pages/Factory_initialize/page_factory_init_data.h
