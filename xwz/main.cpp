@@ -5,7 +5,6 @@
 #include "Pages/Function_page/page_function_data.h"
 #include "Pages/Initialize_setting/Machine_info/page_machine_info_data.h"
 #include "Pages/Initialize_setting/Boot_mode/page_boot_mode_data.h"
-#include "Pages/Initialize_setting/Boot_mode/dev_config.h"
 #include "Pages/Initialize_setting/Unit_setting/page_unit_set_data.h"
 
 #include <QGuiApplication>
@@ -37,10 +36,6 @@ int main(int argc, char *argv[])
     monitor_info = new Page_moniter_info_set_data();
     g_dev_maintain = new Dev_maintain();
     page_data_regeist();
-
-
-    Dev_config config;
-    config.set_work_mode_booting();
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

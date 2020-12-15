@@ -50,6 +50,5 @@ HEADERS += \
     Pages/Function_page/page_function_data.h \
     Pages/Initialize_setting/Machine_info/page_machine_info_data.h \
     Pages/Initialize_setting/Boot_mode/page_boot_mode_data.h \
-    Pages/Initialize_setting/Boot_mode/dev_config.h \
     Pages/Initialize_setting/Unit_setting/page_unit_set_data.h \
     Pages/Initialize_setting/dev_configuration.h

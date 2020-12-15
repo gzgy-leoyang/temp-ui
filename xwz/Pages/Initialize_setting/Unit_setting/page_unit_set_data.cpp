@@ -1,5 +1,4 @@
 #include "page_unit_set_data.h"
-#include "../Boot_mode/dev_config.h"
 #include "../dev_configuration.h"
 
 #include <QRegExp>
