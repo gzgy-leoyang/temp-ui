@@ -50,7 +50,7 @@ FocusScope{
             title: "单位设置"
             icon: ""
             right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_electrical_param_set.qml"
+            view: "qrc:/Pages/Initialize_setting/Unit_setting/Unit_setting.qml"
         }
     }
 

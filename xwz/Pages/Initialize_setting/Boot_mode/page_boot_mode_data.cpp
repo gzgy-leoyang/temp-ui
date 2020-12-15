@@ -1,5 +1,6 @@
 #include "page_boot_mode_data.h"
 #include "dev_config.h"
+#include "../dev_configuration.h"
 
 
 #include <QRegExp>
@@ -14,21 +15,38 @@
 Page_boot_mode_data::
 Page_boot_mode_data(QObject *parent):QObject(parent)
 {
-    Dev_config config ;
-    m_boot_mode = config.m_boot_mode;
-    m_mode_shutdown = config.m_mode_shutdown;
+    QString str;
+    int ret = Dev_configuration::get_key_val(QString("setting.json"),QString("boot_mode"), &str);
+    if ( ret == 0 ){
+        if ( str == "p" ){
+            m_boot_mode = 0;
+        } else if ( str == "e" ){
+            m_boot_mode = 1;
+        } else if ( str == "last" ){
+            m_boot_mode = 2;
+        }
+    } else {
+        m_boot_mode = 1;
+    }
 
     m_tim = new QTimer(this);
     connect( m_tim,SIGNAL(timeout()),this,SLOT(slot_timer()));
-    m_tim->start(500);
+    m_tim->start(200);
 }
 
 Page_boot_mode_data::
 ~Page_boot_mode_data()
 {
     if ( m_modify_counter > 0 ){
-        Dev_config config;
-        config.save_boot_mode( QString("setting.json"),m_boot_mode );
+        QString str;
+        if ( m_boot_mode == 0 ){
+            str = "p";
+        } else if ( m_boot_mode == 1 ){
+            str = "e";
+        } else if ( m_boot_mode == 2 ){
+            str = "last";
+        }
+        Dev_configuration::set_key_val(QString("setting.json"),QString("boot_mode"), str);
     }
 }
 

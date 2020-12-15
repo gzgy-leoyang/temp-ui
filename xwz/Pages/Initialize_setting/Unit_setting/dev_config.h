@@ -13,11 +13,9 @@ public:
     void set_work_mode_booting(void);
     int  save_boot_mode( QString fileName,int _boot_mode );
     int  save_work_mode_shutdown( QString _file_name,int _mode );
-    int  save_key_val( QString _file_name,QString _key,int _val );
 
     int     m_boot_mode ;
     QString m_mode_shutdown;
-    int     m_units ;
 signals:
 
 public slots:

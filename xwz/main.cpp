@@ -6,6 +6,7 @@
 #include "Pages/Initialize_setting/Machine_info/page_machine_info_data.h"
 #include "Pages/Initialize_setting/Boot_mode/page_boot_mode_data.h"
 #include "Pages/Initialize_setting/Boot_mode/dev_config.h"
+#include "Pages/Initialize_setting/Unit_setting/page_unit_set_data.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -26,6 +27,7 @@ void page_data_regeist(void)
     qmlRegisterType<Page_function_data>( "qml.custom.Page_Function_Data", 1, 0, "Page_Function_Data" );
     qmlRegisterType<Page_machine_info_data>( "qml.custom.Page_Machine_Info_Data", 1, 0, "Page_Machine_Info_Data" );
     qmlRegisterType<Page_boot_mode_data>( "qml.custom.Page_Boot_Mode_Data", 1, 0, "Page_Boot_Mode_Data" );
+    qmlRegisterType<Page_unit_set_data>( "qml.custom.Page_Unit_Set_Data", 1, 0, "Page_Unit_Set_Data" );
 }
 
 int main(int argc, char *argv[])
