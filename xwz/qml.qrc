@@ -41,5 +41,6 @@
         <file>Pages/Function_page/Function.qml</file>
         <file>Pages/Initialize_setting/Page_Initialize_set.qml</file>
         <file>Pages/Initialize_setting/Machine_info/Machine_info.qml</file>
+        <file>Pages/Initialize_setting/Boot_mode/Boot_mode.qml</file>
     </qresource>
 </RCC>

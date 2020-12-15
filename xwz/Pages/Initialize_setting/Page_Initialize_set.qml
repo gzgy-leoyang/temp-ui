@@ -43,7 +43,7 @@ FocusScope{
             title: "开机模式"
             icon: ""
             right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_hydraulic_param_set.qml"
+            view: "qrc:/Pages/Initialize_setting/Boot_mode/Boot_mode.qml"
         }
         ListElement {
             type: "page"
