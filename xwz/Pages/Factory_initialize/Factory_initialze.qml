@@ -1,5 +1,7 @@
 import QtQuick 2.7
-import QtQuick.Controls 1.3
+
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 1.4
 import QtQml 2.0
 
 import "../../Qml_widget"
@@ -47,6 +49,17 @@ FocusScope{
             }
         }
 
+
+
+        /*
+                "初始化操作将执行:" +
+                "1.删除故障记录" +
+                "2.复位维护记录" +
+                "3.复位维护保养剩余时间" +
+                "请按[确认]键执行初始化";
+*/
+
+
         Rectangle{
             id:listview_container
             width: page_root.width
@@ -58,6 +71,23 @@ FocusScope{
             anchors.bottomMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
             clip: true
+
+            TextArea {
+                height: 500
+                width: 688
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                text: "初始化操作将执行:\n\t1.删除故障记录\n\t2.复位维护记录\n\t3.复位维护保养剩余时间\n\t请按 [确认] 键执行初始化";
+                font.pixelSize: 30
+
+
+
+                style: TextAreaStyle {
+                    textColor: "#A93545"
+                    backgroundColor: "#050505"
+                }
+            }
 
 
         }
