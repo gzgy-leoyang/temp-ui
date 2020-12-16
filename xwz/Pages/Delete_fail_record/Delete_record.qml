@@ -5,7 +5,7 @@ import QtQuick.Controls 1.4
 import QtQml 2.0
 
 import "../../Qml_widget"
-import qml.custom.Page_Factory_Init_Data 1.0
+import qml.custom.Page_Delete_Record_Data 1.0
 
 FocusScope{
     id:tgu_param_info_for_usr_fs
@@ -20,8 +20,12 @@ FocusScope{
     property string page_name: "initialize_setting"
 
 
-    Page_Factory_Init_Data{
+    Page_Delete_Record_Data{
         id: data_src
+
+        onDelete_success: {
+            console.debug("Delete success");
+        }
     }
 
     // 页面构造完成时,立即设置默认焦点组件
@@ -42,7 +46,7 @@ FocusScope{
             id: title_row
             anchors.bottom: listview_container.top
             anchors.bottomMargin: listview_container.border.width
-            text: "出厂初始化"
+            text: "删除故障记录"
 
             onPicked: {
                 root_stack.pop();
@@ -66,7 +70,7 @@ FocusScope{
                 width: 688
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "初始化操作将执行:\n\t1.删除故障记录\n\t2.复位维护记录\n\t3.复位维护保养剩余时间\n\t请按 [确认] 键执行初始化";
+                text: "确定要删除故障记录吗?";
                 font.pixelSize: 30
                 style: TextAreaStyle {
                     textColor: "#A93545"
@@ -83,7 +87,7 @@ FocusScope{
             anchors.horizontalCenter: parent.horizontalCenter
             text: "确认"
             onClicked: {
-                data_src.confirm_init_clicked();
+                data_src.confirm_delete_clicked();
             }
         }
     }

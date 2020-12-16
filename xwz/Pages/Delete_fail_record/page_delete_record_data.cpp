@@ -1,32 +1,30 @@
-#include "page_factory_init_data.h"
+#include "page_delete_record_data.h"
 
 #include <QDebug>
 #include <QFile>
 #include <unistd.h>
 
-Page_factory_init_data::
-Page_factory_init_data(QObject *parent):QObject(parent)
+Page_delete_record_data::
+Page_delete_record_data(QObject *parent):QObject(parent)
 {
 }
 
-Page_factory_init_data::
-~Page_factory_init_data()
+Page_delete_record_data::
+~Page_delete_record_data()
 {
 }
 
-
-void Page_factory_init_data::
-confirm_init_clicked()
+void Page_delete_record_data::
+confirm_delete_clicked()
 {
-    int ret = replace_file( QString("setting.json"),QString("setting_def.json"));
-    ret = replace_file( QString("fail.db"),QString("fail_def.db"));
+    int ret = replace_file( QString("fail.db"),QString("fail_def.db"));
     if ( ret < 0 ){
-        emit initialze_failed();
+        emit delete_failed();
     }
-    emit initialze_success();
+    emit delete_success();
 }
 
-int Page_factory_init_data::
+int Page_delete_record_data::
 replace_file( QString _des_file_name, QString _src_file_name)
 {
     // 生成目标文件名，目标文件和中间文件对象

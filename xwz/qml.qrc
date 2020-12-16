@@ -44,5 +44,10 @@
         <file>Pages/Initialize_setting/Boot_mode/Boot_mode.qml</file>
         <file>Pages/Initialize_setting/Unit_setting/Unit_setting.qml</file>
         <file>Pages/Factory_initialize/Factory_initialze.qml</file>
+        <file>Pages/History_fail/History_fail.qml</file>
+        <file>Pages/History_fail/Electrical_fail/Electrical_fail.qml</file>
+        <file>Pages/History_fail/Machinery_fail/Machinery_fail.qml</file>
+        <file>Pages/History_fail/Engine_fail/Engine_fail.qml</file>
+        <file>Pages/Delete_fail_record/Delete_record.qml</file>
     </qresource>
 </RCC>

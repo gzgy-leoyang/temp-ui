@@ -2,8 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 1.3
 import QtQml 2.0
 
-import "../Qml_widget"
-import qml.custom.Page_moniter_info_set_data 1.0
+import "../../Qml_widget"
 
 FocusScope{
     id:tgu_param_info_for_usr_fs
@@ -18,10 +17,6 @@ FocusScope{
     property int page_id:1
     property string page_name: "tgu_param_info_for_usr"
 
-//    Page_moniter_info_set_data{
-//        id: data_src
-//    }
-
     // 页面构造完成时,立即设置默认焦点组件
     Component.onCompleted: {
         listview_container.focus = true;
@@ -32,31 +27,24 @@ FocusScope{
 
         ListElement {
             type: "page"
-            title: "发动机"
+            title: "电气故障"
             icon: ""
             right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_engine_param_set.qml"
+            view: "qrc:/Pages/History_fail/Electrical_fail/Electrical_fail.qml"
         }
         ListElement {
             type: "page"
-            title: "液压"
+            title: "机械故障"
             icon: ""
             right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_hydraulic_param_set.qml"
+            view: "qrc:/Pages/History_fail/Machinery_fail/Machinery_fail.qml"
         }
         ListElement {
             type: "page"
-            title: "电气"
+            title: "发动机故障"
             icon: ""
             right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_electrical_param_set.qml"
-        }
-        ListElement {
-            type: "page"
-            title: "配置"
-            icon: ""
-            right_icon:"qrc:/Pages/right_arrow_XL.png"
-            view: "qrc:/Pages/Monitor_info_set/Page_config_param_set.qml"
+            view: "qrc:/Pages/History_fail/Engine_fail/Engine_fail.qml"
         }
     }
 
@@ -68,16 +56,12 @@ FocusScope{
         x:0
         y:0
 
-//        onVisibleChanged: {
-//            data_src.shining(page_root.visible);
-//        }
-
         /*************************  页面名称 *****************************/
         Title_row{
             id: title_row
             anchors.bottom: listview_container.top
             anchors.bottomMargin: listview_container.border.width
-            text: "监控信息设置"
+            text: "历史故障"
 
             onPicked: {
                 root_stack.pop();

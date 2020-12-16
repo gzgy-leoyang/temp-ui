@@ -107,6 +107,28 @@ FocusScope{
                     root_stack.push({item:page, destroyOnPop:true});
                 }
             }
+
+            Button {
+                width: 100
+                height: 80
+                text: "历史故障"
+                onClicked: {
+                    var cmp = Qt.createComponent( "qrc:/Pages/History_fail/History_fail.qml" );
+                    var page = cmp.createObject(root_rect_container,{});
+                    root_stack.push({item:page, destroyOnPop:true});
+                }
+            }
+
+            Button {
+                width: 100
+                height: 80
+                text: "删除历史故障"
+                onClicked: {
+                    var cmp = Qt.createComponent( "qrc:/Pages/Delete_fail_record/Delete_record.qml" );
+                    var page = cmp.createObject(root_rect_container,{});
+                    root_stack.push({item:page, destroyOnPop:true});
+                }
+            }
         }
     }
 }

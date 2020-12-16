@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick sql
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -14,7 +14,12 @@ SOURCES += main.cpp \
     Pages/Initialize_setting/Boot_mode/page_boot_mode_data.cpp \
     Pages/Initialize_setting/Unit_setting/page_unit_set_data.cpp \
     Pages/Initialize_setting/dev_configuration.cpp \
-    Pages/Factory_initialize/page_factory_init_data.cpp
+    Pages/Factory_initialize/page_factory_init_data.cpp \
+    Pages/History_fail/dev_fail_record.cpp \
+    Pages/History_fail/Electrical_fail/page_electrical_fail_data.cpp \
+    Pages/History_fail/Machinery_fail/page_machinery_fail_data.cpp \
+    Pages/History_fail/Engine_fail/page_engine_fail_data.cpp \
+    Pages/Delete_fail_record/page_delete_record_data.cpp
 
 RESOURCES += qml.qrc
 
@@ -53,4 +58,9 @@ HEADERS += \
     Pages/Initialize_setting/Boot_mode/page_boot_mode_data.h \
     Pages/Initialize_setting/Unit_setting/page_unit_set_data.h \
     Pages/Initialize_setting/dev_configuration.h \
-    Pages/Factory_initialize/page_factory_init_data.h
+    Pages/Factory_initialize/page_factory_init_data.h \
+    Pages/History_fail/dev_fail_record.h \
+    Pages/History_fail/Electrical_fail/page_electrical_fail_data.h \
+    Pages/History_fail/Machinery_fail/page_machinery_fail_data.h \
+    Pages/History_fail/Engine_fail/page_engine_fail_data.h \
+    Pages/Delete_fail_record/page_delete_record_data.h

@@ -1,0 +1,10 @@
+{
+    "boot_mode": "p",
+    "coolant_temp_comp": 0,
+    "hydraulic_temp_comp": 0,
+    "idle_delay": 0,
+    "machine_model": "LG123",
+    "machine_sn": "123456",
+    "units": "me",
+    "work_mode_shutdown": "p"
+}
